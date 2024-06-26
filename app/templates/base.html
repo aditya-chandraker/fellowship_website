@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Adi{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/topojson.v1.min.js"></script>
+    <style>
+        body {
+            background-color: white;
+            color: black;
+        }
+
+        .dark body {
+            background-color: black;
+            color: white;
+        }
+
+        :root {
+            --background-color: #f0f0f0;
+            --text-color: #111111;
+        }
+
+        .dark {
+            --background-color: #111111;
+            --text-color: #ffffff;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen bg-background dark:bg-muted dark:text-card-foreground">
+    {% include 'header.html' %}
+
+    <main class="flex-1">
+        {% block content %}{% endblock %}
+    </main>>
+</body>
+
+</html>
