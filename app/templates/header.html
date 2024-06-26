@@ -1,5 +1,6 @@
 <header
-    class="fixed top-0 left-0 right-0 z-50 px-4 lg:px-3 h-14 flex items-center justify-between bg-white dark:bg-muted dark:text-card-foreground">
+    class="fixed top-0 left-0 right-0 z-50 px-4 lg:px-3 h-14 flex items-center justify-between dark:bg-muted dark:text-card-foreground"
+    style="background-color: var(--background-color);">
     <a class="flex items-center justify-center" href="#">
         <img class="rounded-full h-12 w-12" src="../static/img/image.png" alt="Profile Picture">
         <span class="sr-only">Adi</span>
@@ -16,26 +17,24 @@
     </button>
 
     <!-- Navigation menu -->
-    <nav id="menu"
-        class="hidden lg:flex lg:items-center lg:w-auto w-full absolute lg:relative top-14 lg:top-0 left-0 bg-background dark:bg-muted">
+    <nav id="menu" class="hidden lg:flex lg:items-center lg:w-auto w-full absolute lg:relative top-14 lg:top-0 left-0"
+        style="background-color: var(--background-color);">
         <ul class="lg:flex lg:justify-between items-center">
-            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 bg-white dark:text-card-foreground mr-4"
-                    href="#">About</a></li>
-            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 bg-white dark:text-card-foreground mr-4"
-                    href="#">Skills</a></li>
-            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 bg-white dark:text-card-foreground mr-4"
-                    href="#">Experience</a></li>
-            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 bg-white dark:text-card-foreground mr-4"
-                    href="#">Projects</a></li>
-            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 bg-white dark:text-card-foreground mr-4"
-                    href="#">Hobbies</a></li>
-            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 bg-white dark:text-card-foreground mr-4"
-                    href="#">Contact</a></li>
-            <li class="p-2 pl-4 bg-white">
+            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 dark:text-card-foreground mr-4"
+                    href="#about">About</a></li>
+            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 dark:text-card-foreground mr-4"
+                    href="#experience">Experience</a></li>
+            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 dark:text-card-foreground mr-4"
+                    href="#projects">Projects</a></li>
+            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 dark:text-card-foreground mr-4"
+                    href="/hobbies">Hobbies</a></li>
+            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 dark:text-card-foreground mr-4"
+                    href="#contact">Contact</a></li>
+            <li class="p-2 pl-4 ">
                 <div class="flex items-center space-x-2">
                     <button type="button" role="switch" aria-checked="false"
                         class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 {{ 'bg-indigo-600' if dark_mode else 'bg-gray-200' }}"
-                        id="dark-mode-toggle">
+                        id="dark-mode-toggle" onclick="setDarkMode(!html.classList.contains('dark'))">
                         <span class="sr-only">Toggle dark mode</span>
                         <span aria-hidden="true"
                             class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out {{ 'translate-x-5' if dark_mode else 'translate-x-0' }}"></span>
@@ -85,7 +84,20 @@
             html.classList.toggle('dark', isDark);
             darkModeToggle.setAttribute('aria-checked', isDark);
             localStorage.setItem('darkMode', isDark);
-            setDarkMode(isDark);
+            const toggleSpan = darkModeToggle.querySelector('span[aria-hidden="true"]');
+            if (isDark) {
+                darkModeToggle.classList.add('bg-yellow-600');
+                darkModeToggle.classList.remove('bg-gray-200');
+                toggleSpan.classList.add('translate-x-5');
+                toggleSpan.classList.remove('translate-x-0');
+            } else {
+                darkModeToggle.classList.add('bg-gray-200');
+                darkModeToggle.classList.remove('bg-yellow-600');
+                toggleSpan.classList.add('translate-x-0');
+                toggleSpan.classList.remove('translate-x-5');
+            }
+            // setDarkMode(isDark);
+            console.log(isDark)
         };
 
         // Check for saved dark mode preference

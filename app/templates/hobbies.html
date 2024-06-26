@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex flex-col min-h-[100dvh]">
+
+    {% include 'header.html' %}
+
+    <main class="flex-1 bg-background dark:bg-muted">
+        <section id="hobbies" class="w-full px-12 md:py-24 lg:py-32 dark:bg-muted dark:text-card-foreground">
+            <div class="container px-4 md:px-6 text-center">
+                <div class="space-y-4"></div>
+                <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl dark:text-card-foreground">My
+                    Hobbies</h2>
+                <p class="text-muted-foreground md:text-xl dark:text-card-foreground">I enjoy a variety of hobbies
+                    that keep me active and creative.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+                {% for hobby in hobbies %}
+                <div
+                    class="bg-background rounded-md overflow-hidden shadow-md transition-all duration-300 transform hover:scale-105 dark:bg-card-foreground dark:text-card">
+                    <img src="{{ hobby.image }}" alt="{{ hobby.name }}" class="w-full h-40 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold dark:text-card">{{ hobby.name }}</h3>
+                        <p class="text-muted-foreground dark:text-card">{{ hobby.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+</div>
+</section>
+</section>
+</main>
+</div>
+{% endblock %}
