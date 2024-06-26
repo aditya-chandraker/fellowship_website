@@ -1,0 +1,50 @@
+<section id="experience" class="w-full py-12 md:py-24 lg:py-32 bg-muted dark:bg-muted dark:text-card-foreground">
+    <div class="container px-4 md:px-6 text-center">
+        <div class="space-y-4">
+            <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl dark:text-card-foreground">
+                Work Experience
+            </h2>
+            <p class="text-muted-foreground md:text-xl dark:text-card-foreground">
+                Check out my previous work experience.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+            {% for job in [
+                {
+                    'title': 'Front-End Developer',
+                    'company': 'Acme Inc.',
+                    'period': '2021 - 2023',
+                    'responsibilities': [
+                        'Developed responsive and accessible web applications using React, Next.js, and Tailwind CSS.',
+                        'Collaborated with designers and back-end developers to deliver high-quality features.',
+                        'Implemented best practices for performance optimization and code maintainability.',
+                        'Participated in code reviews and mentored junior developers.'
+                    ]
+                },
+                {
+                    'title': 'Web Developer Intern',
+                    'company': 'XYZ Agency',
+                    'period': '2020 - 2021',
+                    'responsibilities': [
+                        'Assisted in the development of client websites using HTML, CSS, and JavaScript.',
+                        'Participated in project planning and client communication.',
+                        'Gained experience in version control, testing, and deployment workflows.',
+                        'Collaborated with a team of designers and developers to deliver projects on time.'
+                    ]
+                }
+            ] %}
+                <div class="bg-background rounded-md overflow-hidden shadow-md transition-all duration-300 transform hover:scale-105 dark:bg-card-foreground dark:text-card">
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold dark:text-card">{{ job.title }}</h3>
+                        <p class="text-muted-foreground dark:text-card">{{ job.company }} | {{ job.period }}</p>
+                        <ul class="list-disc pl-4 mt-2 text-muted-foreground dark:text-card">
+                            {% for responsibility in job.responsibilities %}
+                                <li>{{ responsibility }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

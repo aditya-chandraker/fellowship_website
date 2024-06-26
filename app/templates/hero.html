@@ -1,0 +1,71 @@
+<section id="hero"
+    class="w-full py-2 md:py-24 lg:py-2 bg-[url('/hero-bg.jpg')] bg-cover bg-center relative dark:bg-muted dark:text-card-foreground">
+    <svg id="globe" class="absolute"></svg>
+    <script>
+        // SVG and projection setup
+        const width = 800;
+        const height = 800;
+
+        const svg = d3.select("#globe")
+            .attr("width", width)
+            .attr("height", height);
+
+        const projection = d3.geoOrthographic()
+            .scale(300)
+            .translate([width / 2, height / 2])
+            .rotate([0, 0])
+            .clipAngle(90);
+
+        const path = d3.geoPath()
+            .projection(projection);
+
+        // ISO 3166-1 numeric
+        const visitedCountryIds = [
+            "840", // USA
+            "124", // Canada
+            "250", // France
+            "356", // India
+            "826", // Great Britain
+            // "392" // Japan
+        ];
+
+        // Load and display the world
+        d3.json("https://unpkg.com/world-atlas@1/world/110m.json").then(world => {
+            const countries = topojson.feature(world, world.objects.countries).features;
+
+            // Draw the countries
+            svg.selectAll("path")
+                .data(countries)
+                .enter().append("path")
+                .attr("d", path)
+                .attr("fill", d => visitedCountryIds.includes(d.id) ? "orange" : "lightgray")
+                .attr("stroke", "#000")
+                .attr("stroke-width", 0.5);
+
+            // Rotate the globe
+            d3.timer(elapsed => {
+                const rotate = [elapsed * 0.02 - 100, -30];
+                projection.rotate(rotate);
+                svg.selectAll("path").attr("d", path);
+            });
+        });
+    </script>
+    <div class="container px-4 md:px-6 min-h-screen flex flex-col items-center justify-center space-y-6 text-center">
+        <div class="space-y-2 max-w-2xl">
+            <h1
+                class="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl dark:text-card-foreground">
+                Welcome to my personal website
+            </h1>
+            <p class="text-lg text-muted-foreground md:text-xl dark:text-card-foreground">
+                Explore my skills, projects, hobbies, and get in touch with me.
+            </p>
+        </div>
+        <a class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 dark:bg-card-foreground dark:text-card"
+            href="#">
+            Learn More
+        </a>
+    </div>
+    <div
+        class="absolute right-0 top-0 h-full w-1/2 bg-[url('/profile-pic.jpg')] bg-cover bg-center opacity-20 dark:opacity-50">
+    </div>
+</section>

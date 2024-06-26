@@ -1,0 +1,39 @@
+<section id="projects" class="w-full py-12 md:py-24 lg:py-32 bg-muted dark:bg-muted dark:text-card-foreground">
+    <div class="container px-4 md:px-6 text-center">
+        <div class="space-y-4">
+            <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl dark:text-card-foreground">
+                My Projects
+            </h2>
+            <p class="text-muted-foreground md:text-xl dark:text-card-foreground">
+                Check out some of my recent web development projects.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+            {% for project in [
+                {
+                    'title': 'Project 1',
+                    'description': 'A modern and responsive website for a startup company.',
+                    'image': '/placeholder.svg'
+                },
+                {
+                    'title': 'Project 2',
+                    'description': 'A custom e-commerce website with a modern design.',
+                    'image': '/placeholder.svg'
+                }
+            ] %}
+                <div class="bg-background rounded-md overflow-hidden shadow-md transition-all duration-300 transform hover:scale-105 dark:bg-card-foreground dark:text-card">
+                    <img src="{{ project.image }}" width="400" height="300" alt="{{ project.title }}" class="w-full h-48 object-cover" style="aspect-ratio:400/300;object-fit:cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold dark:text-card">{{ project.title }}</h3>
+                        <p class="text-muted-foreground dark:text-card">{{ project.description }}</p>
+                        <div class="flex justify-end mt-4">
+                            <a class="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 dark:bg-card-foreground dark:text-card" href="#">
+                                View Project
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

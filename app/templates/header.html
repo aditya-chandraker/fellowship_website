@@ -1,0 +1,96 @@
+<header
+    class="fixed top-0 left-0 right-0 z-50 px-4 lg:px-3 h-14 flex items-center justify-between bg-white dark:bg-muted dark:text-card-foreground">
+    <a class="flex items-center justify-center" href="#">
+        <img class="rounded-full h-12 w-12" src="../static/img/image.png" alt="Profile Picture">
+        <span class="sr-only">Adi</span>
+    </a>
+
+    <!-- Hamburger menu button (visible on mobile) -->
+    <button id="menu-toggle" class="lg:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+    <!-- Navigation menu -->
+    <nav id="menu"
+        class="hidden lg:flex lg:items-center lg:w-auto w-full absolute lg:relative top-14 lg:top-0 left-0 bg-background dark:bg-muted">
+        <ul class="lg:flex lg:justify-between items-center">
+            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 bg-white dark:text-card-foreground mr-4"
+                    href="#">About</a></li>
+            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 bg-white dark:text-card-foreground mr-4"
+                    href="#">Skills</a></li>
+            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 bg-white dark:text-card-foreground mr-4"
+                    href="#">Experience</a></li>
+            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 bg-white dark:text-card-foreground mr-4"
+                    href="#">Projects</a></li>
+            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 bg-white dark:text-card-foreground mr-4"
+                    href="#">Hobbies</a></li>
+            <li><a class="block p-2 pl-4 lg:inline-block lg:mt-0 text-sm font-medium hover:underline underline-offset-4 bg-white dark:text-card-foreground mr-4"
+                    href="#">Contact</a></li>
+            <li class="p-2 pl-4 bg-white">
+                <div class="flex items-center space-x-2">
+                    <button type="button" role="switch" aria-checked="false"
+                        class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 {{ 'bg-indigo-600' if dark_mode else 'bg-gray-200' }}"
+                        id="dark-mode-toggle">
+                        <span class="sr-only">Toggle dark mode</span>
+                        <span aria-hidden="true"
+                            class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out {{ 'translate-x-5' if dark_mode else 'translate-x-0' }}"></span>
+                    </button>
+                    <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-card-foreground"
+                        for="dark-mode-toggle">
+                        Dark Mode
+                    </label>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <script>
+        // Menu toggle functionality
+        const menuToggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+
+        menuToggle.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (event) => {
+            const isClickInsideMenu = menu.contains(event.target);
+            const isClickOnMenuToggle = menuToggle.contains(event.target);
+
+            if (!isClickInsideMenu && !isClickOnMenuToggle && !menu.classList.contains('hidden')) {
+                menu.classList.add('hidden');
+            }
+        });
+
+        // Close menu when window is resized to larger screen
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) { // 1024px is the 'lg' breakpoint in Tailwind
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+        });
+
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const html = document.documentElement;
+
+        function setDarkMode(isDark) {
+            html.classList.toggle('dark', isDark);
+            darkModeToggle.setAttribute('aria-checked', isDark);
+            localStorage.setItem('darkMode', isDark);
+            setDarkMode(isDark);
+        };
+
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            setDarkMode(true);
+        }
+    </script>
+</header>
