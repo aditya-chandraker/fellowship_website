@@ -35,11 +35,3 @@ Start flask development server
 $ export FLASK_ENV=development
 $ flask run --host=0.0.0.0
 ```
-
-You should get a response like this in the terminal:
-```
-❯ flask run
- * Environment: development
- * Debug mode: on
- * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-```

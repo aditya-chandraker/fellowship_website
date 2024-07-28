@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<div class="container mx-auto px-4 py-8 max-w-2xl">
+    <h1 class="text-3xl font-bold mb-8 text-center text-gray-600">Timeline</h1>
+
+    <form id="post-form" class="mb-8 bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="mb-4">
+            <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="text" id="name" placeholder="Name" required>
+        </div>
+        <div class="mb-4">
+            <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="email" id="email" placeholder="Email" required>
+        </div>
+        <div class="mb-6">
+            <textarea
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="content" placeholder="Content" required></textarea>
+        </div>
+        <div class="flex items-center justify-between">
+            <button
+                class="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit">
+                Submit
+            </button>
+        </div>
+    </form>
+
+    <div id="timeline-posts" class="space-y-4">loading posts</div>
+</div>
+
+<script>
+    function fetchPosts() {
+        fetch('/api/timeline_post')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const postsContainer = document.getElementById('timeline-posts');
+                postsContainer.innerHTML = '';
+                if (data && Array.isArray(data.timeline_posts)) {
+                    data.timeline_posts.forEach(post => {
+                        const postElement = document.createElement('div');
+                        postElement.className = 'bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 mb-4';
+                        usernumber = post.email.toLowerCase().trim().substr(11, 3);
+                        console.log(usernumber);
+                        const gravatarUrl = `https://www.gravatar.com/avatar/${usernumber}?d=identicon`;
+                        postElement.innerHTML = `
+                        <div class="flex items-center mb-4">
+                            <img src="${gravatarUrl}" alt="${post.name}'s avatar" class="w-10 h-10 rounded-full mr-4">
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-600">${post.name} &nbsp;&nbsp;&nbsp; <span class="text-sm text-gray-600 text-gray-400">${new Date(post.created_at).toLocaleString()}</span></h2>
+                                
+                        <p class="text-gray-800">${post.content}</p>
+
+                            </div>
+                        </div>                    `;
+                        postsContainer.appendChild(postElement);
+                    });
+                } else {
+                    postsContainer.innerHTML = '<p class="text-red-500">No posts found or invalid data structure.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching posts:', error);
+                const postsContainer = document.getElementById('timeline-posts');
+                postsContainer.innerHTML = `<p class="text-red-500">Error fetching posts: ${error.message}</p>`;
+            });
+    }
+
+    document.getElementById('post-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const content = document.getElementById('content').value;
+
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('content', content);
+
+        fetch('/api/timeline_post', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                fetchPosts();
+                document.getElementById('post-form').reset();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert(`Failed to submit post. Error: ${error.message}`);
+            });
+    });
+
+    fetchPosts();
+</script>
+{% endblock %}

@@ -22,7 +22,7 @@ GET_RESPONSE=$(curl -s http://localhost:5000/api/timeline_post)
 # Check if the new post is in the list of timeline posts
 if echo "$GET_RESPONSE" | grep -q "$NAME"; then
     echo "GET request successful: New post found in timeline posts."
-elsemymys
+else
     echo "GET request failed: New post not found in timeline posts."
     exit 1
 fi
