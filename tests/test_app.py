@@ -60,5 +60,3 @@ class AppTestCase(unittest.TestCase):
       rv = self.client.get('/#contact')
       assert rv.status_code == 200
       assert b"Contact" in rv.data
-
-
